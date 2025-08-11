@@ -21,13 +21,13 @@ public class GridPi : MonoBehaviour
         nodeDiameter = nodeRadius * 2;
         gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
         gridSizeY = Mathf.RoundToInt(gridWorldSize.y / nodeDiameter);
-        /*CreateGrid();
+        CreateGrid();
 
         foreach(TerrainType region in walkableReigons)
         {
             walkableMask.value |= region.terrainMask.value;
             walkableRegionDict.Add((int)Mathf.Log(region.terrainMask.value, 2), region.terrainPenalty);
-        }*/
+        }
     }
 
     public async UniTask<bool> GenerateNewGrid()
