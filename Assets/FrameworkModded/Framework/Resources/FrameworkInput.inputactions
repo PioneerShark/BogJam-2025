@@ -15,18 +15,27 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "LookGamepad",
+                    "name": "Look",
                     "type": "Value",
-                    "id": "9382b154-02ca-430a-bcfc-5de3da1c0cb7",
+                    "id": "72ce0789-7292-48ad-9202-aeae35987a31",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Look",
+                    "name": "MoveGamepad",
                     "type": "Value",
-                    "id": "72ce0789-7292-48ad-9202-aeae35987a31",
+                    "id": "c246ee80-a44b-4a6b-8545-2d7657aa9908",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "LookGamepad",
+                    "type": "Value",
+                    "id": "9382b154-02ca-430a-bcfc-5de3da1c0cb7",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
@@ -51,7 +60,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "FireSecondary",
+                    "name": "ActionSecondary",
                     "type": "Button",
                     "id": "552a57d8-2502-4e9d-982b-5a7d08cd971b",
                     "expectedControlType": "",
@@ -60,7 +69,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Fire",
+                    "name": "ActionPrimary",
                     "type": "Button",
                     "id": "eeee2544-1304-46e2-aa94-c75b6da8ff17",
                     "expectedControlType": "",
@@ -76,6 +85,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Scroll",
+                    "type": "PassThrough",
+                    "id": "965e388b-b08b-4d42-b85f-19dd9b78b5eb",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -136,12 +154,12 @@
                 },
                 {
                     "name": "",
-                    "id": "67951218-800e-42e0-9421-b0b260418e04",
+                    "id": "3cd245b0-167a-4b68-9100-3917a4039b23",
                     "path": "<Gamepad>/leftStick",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "Move",
+                    "action": "MoveGamepad",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -207,7 +225,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";MNK",
-                    "action": "Fire",
+                    "action": "ActionPrimary",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -218,7 +236,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "Fire",
+                    "action": "ActionPrimary",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -262,7 +280,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";MNK",
-                    "action": "FireSecondary",
+                    "action": "ActionSecondary",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -273,7 +291,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "FireSecondary",
+                    "action": "ActionSecondary",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -285,6 +303,17 @@
                     "processors": "StickDeadzone",
                     "groups": ";Gamepad",
                     "action": "LookGamepad",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4946f302-fb95-4c1a-b3f9-d6dbb0f00a78",
+                    "path": "<Mouse>/scroll/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Scroll",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
