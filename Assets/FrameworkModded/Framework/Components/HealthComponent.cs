@@ -17,8 +17,7 @@ public class HealthComponent : MonoBehaviour
     private Material[] materials;
 
 
-    UnityEvent<Room> OnDeathEvent;
-    Room roomID;
+
 
     [SerializeField]
     float healthMax;
@@ -58,22 +57,11 @@ public class HealthComponent : MonoBehaviour
 
     public void Die()
     {
-        if (OnDeathEvent != null)
-        {
-            OnDeathEvent.Invoke(roomID);
-        }
         
         Destroy(this.gameObject);
     }
 
-    public void AssignDeathEvent(UnityAction<Room> deathEvent, Room newRoomID){
-        if (OnDeathEvent == null)
-        {
-            OnDeathEvent = new UnityEvent<Room>();
-        }
-        OnDeathEvent.AddListener(deathEvent);
-        roomID = newRoomID;
-    }
+
 
     private void InitialiseMaterials()
     {
