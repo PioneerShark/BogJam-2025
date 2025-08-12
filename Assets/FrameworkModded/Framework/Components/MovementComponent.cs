@@ -23,8 +23,9 @@ public class MovementComponent : MonoBehaviour
     [HideInInspector]
     public Transform target;
 
-    float skinWidth = 0.06f;
-    int collideIterations = 5;
+    public float repelStrength = 3f;
+    public float skinWidth = 0.001f;
+    public int collideIterations = 2;
     public Collider col;
     public LayerMask collisionMask;
     public LayerMask pushMask;
@@ -52,6 +53,8 @@ public class MovementComponent : MonoBehaviour
     {
         direction = direction.normalized;
         Vector3 vel = moveSpeed * Time.deltaTime * new Vector3(direction.x, 0, direction.y);
+        Vector2 repel = Repel();
+        vel += new Vector3(repel.x, 0, repel.y) * Time.deltaTime;
         transform.position += CollideAndSlide(vel, transform.position + posOffset);
         transform.position = new Vector3(transform.position.x, 0, transform.position.z);
     }
@@ -84,10 +87,10 @@ public class MovementComponent : MonoBehaviour
     {
         if (!isDashing)
         {
-            Move(moveVector + Repel());
+            Move(moveVector);
         }
 
-        Repel();
+        //Repel();
     }
 
     private Vector2 Repel()
@@ -103,10 +106,10 @@ public class MovementComponent : MonoBehaviour
             return Vector2.zero;
         }
         location = location / collisions.Length;
-        location = location - transform.position;
-        Vector2 pushVector = new Vector2(location.x, location.z) * 1f;
-        return -pushVector;
+        location = transform.position - location;
+        return new Vector2(location.x, location.z) * repelStrength;;
     }
+    
     public async UniTask Dash(Vector3 dir, float dashSpeed, float dashDuration)
     {
         if (isDashing) return;

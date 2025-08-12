@@ -8,6 +8,7 @@ public class CameraComponent : MonoBehaviour
     public Vector3 offset = Vector3.zero;
     public Vector3 eulerAngle = Vector3.zero;
     [Range(0f, 100f)] public float distance = 50f;
+    public MinMaxInt zoomLevel = new MinMaxInt(1, 6);
     [Range(0f, 1f)] public float panWeightX = 0.5f;
     [Range(0f, 1f)] public float panWeightY = 0.5f;
     [Range(0f, 1f)] public float panWeightZ = 0.5f;
@@ -23,8 +24,15 @@ public class CameraComponent : MonoBehaviour
     public bool updateInEditMode = false;
     [SerializeField] private Camera _targetCamera;
     [SerializeField] private Transform _targetPanTowards;
+
     private Vector3 _targetPanTowardsPosition = Vector3.zero;
     private bool _panTowardsPosition = false;
+    private int _currentZoomLevel = 0;
+
+    protected virtual void Awake()
+    {
+        _currentZoomLevel = zoomLevel.max;
+    }
 
     protected virtual void LateUpdate()
     {
@@ -35,6 +43,8 @@ public class CameraComponent : MonoBehaviour
 
         // Update
         float lerpValue = Application.isPlaying == true ? 1f - Mathf.Exp(-smoothSpeed * Time.deltaTime) : 1f;
+        _currentZoomLevel = Application.isPlaying == true && _currentZoomLevel <= zoomLevel.max ? _currentZoomLevel : zoomLevel.max;
+
         if (!_panTowardsPosition)
         {
             _targetPanTowardsPosition = _targetPanTowards != null ? _targetPanTowards.position : this.transform.position;
@@ -43,6 +53,9 @@ public class CameraComponent : MonoBehaviour
         {
 
         }
+
+        // Modify the distance based on zoom
+        float finalDistance = (distance / zoomLevel.max) * _currentZoomLevel;
 
         Vector3 targetDistanceOffset = Vector3.zero;
 
@@ -54,7 +67,7 @@ public class CameraComponent : MonoBehaviour
 
             this.transform.position = Vector3.zero;
             this.transform.rotation = Quaternion.Euler(eulerAngle);
-            this.transform.Translate(0, 0, -distance);
+            this.transform.Translate(0, 0, -finalDistance);
 
             targetDistanceOffset = this.transform.position;
             this.transform.position = cachedPosition;
@@ -62,7 +75,7 @@ public class CameraComponent : MonoBehaviour
         }
         else
         {
-            _targetCamera.orthographicSize = Mathf.Lerp(_targetCamera.orthographicSize, distance, snapToDistance == false ? lerpValue : 1f);
+            _targetCamera.orthographicSize = Mathf.Lerp(_targetCamera.orthographicSize, finalDistance, snapToDistance == false ? lerpValue : 1f);
         }
 
         // Update
@@ -101,6 +114,13 @@ public class CameraComponent : MonoBehaviour
         _targetPanTowards = null;
         _panTowardsPosition = true;
         _targetPanTowardsPosition = setTargetPanTowardsPosition;
+    }
+
+    public virtual void Zoom(float zoomValue)
+    {
+        zoomValue = Mathf.Clamp(zoomValue, -1, 1);
+        int zoomValueInt = Mathf.RoundToInt(zoomValue);
+        _currentZoomLevel = Mathf.Clamp(_currentZoomLevel + zoomValueInt, zoomLevel.min, zoomLevel.max);
     }
 
     protected virtual Camera ResolveCamera()
