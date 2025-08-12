@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 public class MapGenerator : MonoBehaviour
 {
@@ -13,13 +14,17 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] bool restart;
     [SerializeField] int smoothingPasses;
 
+    [SerializeField] GameObject blockToPlace;
+    [SerializeField] List<GameObject> gemsOres;
+
     [Range(0, 100)] [SerializeField] int randomFillPercent;
 
     int[,] map;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        GenerateMap();
+        GenerateMapPlan();
+        
     }
 
     // Update is called once per frame
@@ -28,16 +33,30 @@ public class MapGenerator : MonoBehaviour
         if (restart)
         {
             restart = false;
-            GenerateMap();
+            GenerateMapPlan();
         }
     }
-    void GenerateMap()
+    void GenerateMapPlan()
     {
         map = new int[width, height];
         RandomMapFill();
         for (int i = 0; i < smoothingPasses; i++)
         {
             SmoothMap();
+        }
+        GemMap();
+        GenerateMap();
+    }
+    void GenerateMap()
+    {
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                if (map[x,y] == 1) Instantiate(blockToPlace, new Vector3(x - width / 2, 0, y - height / 2), Quaternion.identity);
+                if (map[x, y] == 2) Instantiate(gemsOres[0], new Vector3(x - width / 2, 0, y - height / 2), Quaternion.identity);
+                if (map[x, y] == 3) Instantiate(gemsOres[1], new Vector3(x - width / 2, 0, y - height / 2), Quaternion.identity);
+            }
         }
     }
     void SmoothMap()
@@ -61,6 +80,35 @@ public class MapGenerator : MonoBehaviour
         }
         map = tempMap;
     }
+
+    void GemMap()
+    {
+        int[,] tempMap = map;
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+
+                if (tempMap[x, y] == 1) 
+                {
+                    int neighbourWallTiles = GetSurroundingWallCount(x, y);
+                    if (neighbourWallTiles > 2 && UnityEngine.Random.Range(0,1000) == 5)
+                    {
+                        tempMap[x, y] = 3;
+                    }
+                    else if (neighbourWallTiles > 2 && UnityEngine.Random.Range(0, 100) == 7)
+                    {
+                        tempMap[x, y] = 2;
+                    }
+                }
+                
+
+
+            }
+        }
+        map = tempMap;
+    }
+
     void RandomMapFill()
     {
         if (useRandomSeed)
@@ -106,6 +154,7 @@ public class MapGenerator : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        return;
         if (map != null)
         {
             for (int x = 0; x < width; x++)

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 480528920933437651}
   - component: {fileID: 8003504684144692922}
   m_Layer: 8
-  m_Name: PFB_Default
+  m_Name: PFB_GOLD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -119,7 +119,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3bdd18d63fe13a440a9eb6ba486ab2a7, type: 2}
+  - {fileID: 2100000, guid: db1a17ef489d5b64cbffa1683a194058, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -206,7 +206,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b0fca3141b4847944b1b01cd8c11c316, type: 2}
+  - {fileID: 2100000, guid: db1a17ef489d5b64cbffa1683a194058, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
