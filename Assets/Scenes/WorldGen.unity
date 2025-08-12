@@ -184,7 +184,7 @@ MonoBehaviour:
   floorMask:
     serializedVersion: 2
     m_Bits: 16
-  gridWorldSize: {x: 20, y: 20}
+  gridWorldSize: {x: 100, y: 100}
   nodeRadius: 2
   nodeSkin: 1.8
   walkableReigons:
@@ -201,7 +201,7 @@ Transform:
   m_GameObject: {fileID: 424748889}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.149488, y: -0.00000040327433, z: -2.3360798}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -591,7 +591,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2007925072
 Transform:
   m_ObjectHideFlags: 0
@@ -619,12 +619,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b328932f7f3cf04a86cfd05b536b273, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 30
-  height: 30
+  width: 100
+  height: 100
   seed: 1090334871
   useRandomSeed: 0
   restart: 0
-  smoothingPasses: 0
+  smoothingPasses: 5
   randomFillPercent: 50
 --- !u!1 &2028171857
 GameObject:
